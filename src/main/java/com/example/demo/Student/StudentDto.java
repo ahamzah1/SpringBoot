@@ -1,9 +1,12 @@
 package com.example.demo.Student;
 
 
+import jakarta.validation.constraints.NotEmpty;
 
 public class  StudentDto{
+    @NotEmpty(message = "name should not be empty!")
     private String name;
+    @NotEmpty
     private String email;
     private Integer schoolId;
 

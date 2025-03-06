@@ -4,6 +4,7 @@ import com.example.demo.Security.JwtFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableAspectJAutoProxy
 public class SecurityConfig {
 
     @Autowired
@@ -36,7 +38,9 @@ public class SecurityConfig {
         // Allow public access to "/auth/register"
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/auth/register").permitAll()
-                .requestMatchers("/auth/login").permitAll()// ✅ Allow access
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/swagger-ui/**", "/v3/**").permitAll()
+                .requestMatchers("/test").permitAll()// ✅ Allow access
                 .anyRequest().authenticated());  // 🔒 All other endpoints require authentication
 
         http.httpBasic(Customizer.withDefaults());
